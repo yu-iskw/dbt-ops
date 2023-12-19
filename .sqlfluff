@@ -1,0 +1,56 @@
+[sqlfluff]
+templater = jinja
+dialect = bigquery
+sql_file_exts = .sql
+large_file_skip_byte_limit = 0
+
+# L003: Indentation not consistent with previous lines.
+# L016: Line is too long.
+# L027: References should be qualified if select has more than one referenced table/view.
+# L031: Avoid table aliases in from clauses and join conditions.
+# L032: Prefer specifying join keys instead of using USING.
+# L034: Select wildcards then simple targets before calculations and aggregates.
+# L036: Select targets should be on a new line unless there is only one select target.
+# L059: Unnecessary quoted identifier.
+# L060: Use COALESCE instead of IFNULL or NVL.
+# L064: Consistent usage of preferred quotes for quoted literals.
+exclude_rules = L003, L016, L027, L031, L032, L034, L036, L059, L060, L064
+
+[tool.sqlfluff.templater.jinja]
+apply_dbt_builtins = True
+
+[sqlfluff:templater:jinja]
+library_path = sqlfluff_libs
+
+[sqlfluff:templater:dbt]
+project_dir = .
+profiles_dir = ./profiles
+profile = default
+target = jp
+
+[sqlfluff:rules:capitalisation.keywords]
+# Keywords
+capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.identifiers]
+# Non-keyword capitalization
+extended_capitalisation_policy = lower
+
+[sqlfluff:rules:layout.commas]
+# Trailing commas
+comma_style = trailing
+
+[sqlfluff:rules:capitalisation.functions]
+# Function names
+extended_capitalisation_policy = upper
+
+[sqlfluff:rules:convention.select_trailing_comma]
+select_clause_trailing_comma = require
+
+[sqlfluff:rules:capitalisation.literals]
+# Null & Boolean Literals
+capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.types]
+# Capitalisation of datatypes
+extended_capitalisation_policy = upper
