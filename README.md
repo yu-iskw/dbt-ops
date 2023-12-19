@@ -17,9 +17,11 @@ Check [dbt Hub](https://hub.getdbt.com/yu-iskw/dbt_unittest/latest/) for the lat
 
 ### get_unreferenced_sources
 
+This macro returns a list of unreferenced sources.
+
 - [get_unreferenced_sources.sql](./macros/public/get_unreferenced_sources.sql)
 - [get_unreferenced_sources.yml](./macros/public/get_unreferenced_sources.yml)
 
-```
+```shell
 dbt run-operation get_unreferenced_sources
 ```
