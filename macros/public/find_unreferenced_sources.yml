@@ -15,7 +15,7 @@
 version: 2
 
 macros:
-  - name: get_unreferenced_sources
+  - name: find_unreferenced_sources
     description: |-
       This macro returns a list of sources that are not referenced by any models.
       This is useful for identifying sources that are no longer needed.
