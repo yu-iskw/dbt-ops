@@ -164,3 +164,4 @@ tmp*
 integration_tests/jaffle_shop.db
 dbt_packages/
 .vscode/
+integration_tests/package-lock.yml

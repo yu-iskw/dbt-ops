@@ -19,5 +19,5 @@
 {% endmacro %}
 
 {% macro default__test_macros() %}
-  {% do integration_tests.test_get_unrendered_sources() %}
+  {% do integration_tests.test_find_unrendered_sources() %}
 {% endmacro %}

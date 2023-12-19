@@ -14,12 +14,12 @@
   limitations under the License.
 #}
 
-{% macro get_unreferenced_sources(format='json', reference_resource_types = ['model', 'snapshot', 'exposure']) %}
+{% macro find_unreferenced_sources(format='json', reference_resource_types = ['model', 'snapshot', 'exposure']) %}
   {#
     The macro enables us to get unreferenced sources so that we can maintain dbt projects.
     It returns a list of sources that are not referenced by any models, snapshots, or exposures.
   #}
-  {% set unreferenced_sources = __get_unreferenced_sources(reference_resource_types) %}
+  {% set unreferenced_sources = __find_unreferenced_sources(reference_resource_types) %}
 
   {% if format == 'json' %}
     {{ print(tojson(unreferenced_sources)) }}
@@ -30,7 +30,7 @@
   {% endif %}
 {% endmacro %}
 
-{% macro __get_unreferenced_sources(reference_resource_types = ['model', 'snapshot', 'exposure']) %}
+{% macro __find_unreferenced_sources(reference_resource_types = ['model', 'snapshot', 'exposure']) %}
   {# Get all sources #}
   {% set all_sources = {} %}
   {% for source in graph.sources.values() %}
