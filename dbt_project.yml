@@ -1,0 +1,6 @@
+name: "dbt_ops"
+version: "0.0.1"
+
+config-version: 2
+
+require-dbt-version: [">=1.5.0"]

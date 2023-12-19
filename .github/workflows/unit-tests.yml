@@ -1,0 +1,77 @@
+name: Unit tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  bigquery:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Python 3.8
+          - python-version: "3.8"
+            pip-requirements: "requirements-1.5.txt"
+          - python-version: "3.8"
+            pip-requirements: "requirements-1.6.txt"
+          - python-version: "3.8"
+            pip-requirements: "requirements-1.7.txt"
+          # Python 3.9
+          - python-version: "3.9"
+            pip-requirements: "requirements-1.5.txt"
+          - python-version: "3.9"
+            pip-requirements: "requirements-1.6.txt"
+          - python-version: "3.9"
+            pip-requirements: "requirements-1.7.txt"
+          # Python 3.10
+          - python-version: "3.10"
+            pip-requirements: "requirements-1.5.txt"
+          - python-version: "3.10"
+            pip-requirements: "requirements-1.6.txt"
+          - python-version: "3.10"
+            pip-requirements: "requirements-1.7.txt"
+          # Python 3.11
+          - python-version: "3.10"
+            pip-requirements: "requirements-1.5.txt"
+          - python-version: "3.10"
+            pip-requirements: "requirements-1.6.txt"
+          - python-version: "3.10"
+            pip-requirements: "requirements-1.7.txt"
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "**/${{ matrix.pip-requirements }}"
+      - name: Install dbt
+        working-directory: "${{ github.workspace }}/integration_tests"
+        run: |
+          pip install -r "requirements/${{ matrix.pip-requirements }}"
+      - name: Run unit tests
+        id: "unit-tests"
+        working-directory: "${{ github.workspace }}/integration_tests"
+        run: |
+          bash run_unit_tests.sh
+      # Save artifacts for debug only if unit tests failed
+      - name: Save logs and artifacts if failed
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: save-logs-and-target-${{ matrix.python-version }}-${{ matrix.pip-requirements }}
+          retention-days: 3
+          path: |
+            integration_tests/logs
+            integration_tests/target
+      - id: exit
+        if: failure() && steps.unit-tests.outputs.exitcode != 0
+        run: |-
+          exit 1

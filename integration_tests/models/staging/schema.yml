@@ -1,0 +1,87 @@
+version: 2
+models:
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+        description: ""
+        meta:
+          dimension:
+            type: number
+      - name: first_name
+        description: ""
+        meta:
+          dimension:
+            type: string
+      - name: last_name
+        description: ""
+        meta:
+          dimension:
+            type: string
+  - name: stg_orders
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+        description: ""
+        meta:
+          dimension:
+            type: number
+      - name: status
+        tests:
+          - accepted_values:
+              values:
+                - placed
+                - shipped
+                - completed
+                - return_pending
+                - returned
+        description: ""
+        meta:
+          dimension:
+            type: string
+      - name: customer_id
+        description: ""
+        meta:
+          dimension:
+            type: number
+      - name: order_date
+        description: ""
+        meta:
+          dimension:
+            type: date
+  - name: stg_payments
+    columns:
+      - name: payment_id
+        tests:
+          - unique
+          - not_null
+        description: ""
+        meta:
+          dimension:
+            type: number
+      - name: payment_method
+        tests:
+          - accepted_values:
+              values:
+                - credit_card
+                - coupon
+                - bank_transfer
+                - gift_card
+        description: ""
+        meta:
+          dimension:
+            type: string
+      - name: order_id
+        description: ""
+        meta:
+          dimension:
+            type: number
+      - name: amount
+        description: ""
+        meta:
+          dimension:
+            type: number
