@@ -60,6 +60,7 @@ jobs:
         id: "unit-tests"
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
+          dbt deps
           bash run_unit_tests.sh
       # Save artifacts for debug only if unit tests failed
       - name: Save logs and artifacts if failed
