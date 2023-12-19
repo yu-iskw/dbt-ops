@@ -8,3 +8,6 @@ setup-pre-commit:
 
 lint:
 	pre-commit run --all-files
+
+generate-toc:
+	markdown-toc -i README.md --maxdepth 3
