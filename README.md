@@ -7,7 +7,7 @@ This dbt package enables us to analyze dbt projects.
 - [Installation Instructions](#installation-instructions)
 - [Compatibility with dbt Versions and Adapters](#compatibility-with-dbt-versions-and-adapters)
 - [Macros](#macros)
-  * [get_unreferenced_sources](#get_unreferenced_sources)
+  * [find_unreferenced_sources](#find_unreferenced_sources)
 
 <!-- tocstop -->
 
