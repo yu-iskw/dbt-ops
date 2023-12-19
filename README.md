@@ -23,13 +23,13 @@ We have verified that this package functions correctly with dbt Core version 1.5
 
 ## Macros
 
-### get_unreferenced_sources
+### find_unreferenced_sources
 
 This macro returns a list of unreferenced sources.
 
-- [get_unreferenced_sources.sql](./macros/public/get_unreferenced_sources.sql)
-- [get_unreferenced_sources.yml](./macros/public/get_unreferenced_sources.yml)
+- [find_unreferenced_sources.sql](./macros/public/find_unreferenced_sources.sql)
+- [find_unreferenced_sources.yml](./macros/public/find_unreferenced_sources.yml)
 
 ```shell
-dbt run-operation get_unreferenced_sources
+dbt run-operation find_unreferenced_sources
 ```
