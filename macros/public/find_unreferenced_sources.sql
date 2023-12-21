@@ -14,14 +14,18 @@
   limitations under the License.
 #}
 
-{% macro find_unreferenced_sources(format='json', reference_resource_types = ['model', 'snapshot', 'exposure']) %}
+{% macro find_unreferenced_sources(format='text', reference_resource_types = ['model', 'snapshot', 'exposure']) %}
   {#
     The macro enables us to get unreferenced sources so that we can maintain dbt projects.
     It returns a list of sources that are not referenced by any models, snapshots, or exposures.
   #}
   {% set unreferenced_sources = __find_unreferenced_sources(reference_resource_types) %}
 
-  {% if format == 'json' %}
+  {% if format == 'text' %}
+    {% for unique_id in unreferenced_sources %}
+      {{ print(unique_id) }}
+    {% endfor %}
+  {% elif format == 'json' %}
     {{ print(tojson(unreferenced_sources)) }}
   {% elif format == 'yaml' %}
     {{ print(toyaml(unreferenced_sources)) }}
@@ -43,7 +47,7 @@
     {# Check if the current node is of a type that should be referenced #}
     {% if node.resource_type in reference_resource_types %}
       {# Get nodes that the current node depends on #}
-      {% set dependent_nodes = dbt_ops.get_node_depends_on(node) %}
+      {% set dependent_nodes = node.depends_on.nodes %}
 
       {# If there are dependent nodes, iterate over them #}
       {% if dependent_nodes is not none and dependent_nodes|length > 0 %}

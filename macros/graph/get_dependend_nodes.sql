@@ -15,13 +15,25 @@
 #}
 
 {#
-  Get the nodes that the given node depends on
+  Recursively get nodes that the given node depends on
 #}
 
-{% macro get_node_depends_on(node) %}
-  {% if node.depends_on is defined and node.depends_on.nodes is defined %}
-    {{ return(node.depends_on.nodes) }}
-  {% else %}
-    {{ return(none) }}
+{% macro get_node_depends_on(unique_id) %}
+  {% set focused_node = dbt_ops.get_node_by_unique_id(unique_id) %}
+
+  {% if not focused_node %}
+    {{ exceptions.raise_compiler_error("Node not found by unique_id: " + unique_id) }}
   {% endif %}
+
+  {% set returned_value = {focused_node.unique_id: {"depends_on": {}}} %}
+
+  {% if focused_node.depends_on and focused_node.depends_on.nodes %}
+    {% for dependent_unique_id in focused_node.depends_on.nodes %}
+      {% set dependent_node = dbt_ops.get_node_depends_on(dependent_unique_id) %}
+
+      {% do returned_value[unique_id]["depends_on"].update({dependent_unique_id: dependent_node}) %}
+    {% endfor %}
+  {% endif %}
+
+  {{ return(returned_value) }}
 {% endmacro %}

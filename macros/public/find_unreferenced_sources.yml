@@ -23,8 +23,8 @@ macros:
       - name: format
         type: string
         description: |-
-          The format of the output. Valid values are `json` and `yaml`. Defaults to `json`.
+          The format of the output. Valid values must be one of `text`, `json` and `yaml`. Defaults to `text`.
       - name: reference_resource_types
         type: A list of string
         description: |-
-          A list of resource types to consider as references. Defaults to `["model", "snapshots", "exposures"]`.
+          A list of resource types to consider as references. Defaults to `["model", "snapshot", "exposure"]`.
