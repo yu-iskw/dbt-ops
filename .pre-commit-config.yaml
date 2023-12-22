@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+default_stages:
+  - commit
+  - push
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
@@ -40,3 +44,15 @@ repos:
     rev: 2.3.5
     hooks:
       - id: sqlfluff-fix
+  # Execute `make generate-toc` before commit
+  - repo: local
+    hooks:
+      - id: generate-toc
+        name: generate-toc
+        entry: make
+        args: [generate-toc]
+        language: system
+        types: [file]
+        pass_filenames: false
+        always_run: true
+        stages: [commit]
