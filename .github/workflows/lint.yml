@@ -40,4 +40,4 @@ jobs:
       # Run pre-commit
       - name: Run pre-commit
         run: |
-          pre-commit run --all-files
+          SKIP="generate-toc" pre-commit run --all-files
