@@ -1,4 +1,4 @@
-name: Unit tests
+name: Integration tests
 
 on:
   pull_request:
@@ -57,13 +57,12 @@ jobs:
         run: |
           pip install -U -r "${{ github.workspace }}/requirements-dev.txt"
           pip install -U -r "requirements/${{ matrix.pip-requirements }}"
-      - name: Run unit tests
-        id: "unit-tests"
+      - name: Run integration tests
+        id: "integration-tests"
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
-          dbt deps
-          bash run_unit_tests.sh
-      # Save artifacts for debug only if unit tests failed
+          make integration-tests
+      # Save artifacts for debug only if integration tests failed
       - name: Save logs and artifacts if failed
         if: ${{ failure() }}
         uses: actions/upload-artifact@v3
@@ -74,6 +73,6 @@ jobs:
             integration_tests/logs
             integration_tests/target
       - id: exit
-        if: failure() && steps.unit-tests.outputs.exitcode != 0
+        if: failure() && steps.integration-tests.outputs.exitcode != 0
         run: |-
           exit 1
