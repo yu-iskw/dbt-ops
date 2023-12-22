@@ -30,7 +30,7 @@ We have verified that this package functions correctly with dbt Core version 1.5
 This macro returns a list of unreferenced sources.
 
 - [source](./macros/public/find_unreferenced_sources.sql)
-- [property](./macros/public/find_unreferenced_sources.yml)
+- [schema property](./macros/public/find_unreferenced_sources.yml)
 
 **Usage:**
 
@@ -43,7 +43,7 @@ dbt run-operation find_unreferenced_sources
 This macro returns a list of downstream models.
 
 - [source](./macros/public/find_downstream_nodes.sql)
-- [property](./macros/public/find_downstream_nodes.yml)
+- [schema property](./macros/public/find_downstream_nodes.yml)
 
 **Usage:**
 
@@ -60,7 +60,7 @@ dbt run-operation find_downstream_nodes --args '{"unique_id": "model.integration
 This macro returns a list of upstream models.
 
 - [source](./macros/public/find_upstream_nodes.sql)
-- [property](./macros/public/find_upstream_nodes.yml)
+- [schema property](./macros/public/find_upstream_nodes.yml)
 
 **Usage:**
 
