@@ -44,7 +44,7 @@ repos:
     rev: 2.3.5
     hooks:
       - id: sqlfluff-fix
-  # Execute `make generate-toc` before commit
+  # Execute `make generate-toc` before commit, but ignore if executing `pre-commit run --all-files`
   - repo: local
     hooks:
       - id: generate-toc
@@ -54,5 +54,5 @@ repos:
         language: system
         types: [file]
         pass_filenames: false
-        always_run: true
+        always_run: false
         stages: [commit]
