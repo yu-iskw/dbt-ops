@@ -16,22 +16,10 @@
 
 set -Eeuo pipefail
 
-# Constants
-SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
-DUCKDB_FILE="${SCRIPT_DIR}/jaffle_shop.db"
-
-# Create a new test database
-rm -f "${DUCKDB_FILE}"
-python resources/duckdb/initialize_duckdb_database.py \
-    --output "${DUCKDB_FILE}" \
-    --data resources/duckdb/data/
-
-# Run dbt
-dbt build
-
-# Run macros
 dbt run-operation find_unreferenced_sources
+
 dbt run-operation find_downstream_nodes \
 	--args '{"unique_id": "model.integration_tests.stg_orders", "resource_types": ["model", "snapshot", "exposure"]}'
+
 dbt run-operation find_upstream_nodes \
 	--args '{"unique_id": "model.integration_tests.orders", "resource_types": ["model", "snapshot", "source"]}'
