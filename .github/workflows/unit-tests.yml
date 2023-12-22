@@ -35,11 +35,11 @@ jobs:
           - python-version: "3.10"
             pip-requirements: "requirements-1.7.txt"
           # Python 3.11
-          - python-version: "3.10"
+          - python-version: "3.11"
             pip-requirements: "requirements-1.5.txt"
-          - python-version: "3.10"
+          - python-version: "3.11"
             pip-requirements: "requirements-1.6.txt"
-          - python-version: "3.10"
+          - python-version: "3.11"
             pip-requirements: "requirements-1.7.txt"
     defaults:
       run:
