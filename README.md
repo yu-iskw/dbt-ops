@@ -7,9 +7,9 @@ This dbt package enables us to analyze dbt projects.
 - [Installation Instructions](#installation-instructions)
 - [Compatibility with dbt Versions and Adapters](#compatibility-with-dbt-versions-and-adapters)
 - [Macros](#macros)
-  * [find_unreferenced_sources ([source](./macros/public/find_unreferenced_sources.sql), [property](./macros/public/find_unreferenced_sources.yml))](#find_unreferenced_sources-sourcemacrospublicfind_unreferenced_sourcessql-propertymacrospublicfind_unreferenced_sourcesyml)
-  * [find_downstream_models ([source](./macros/public/find_downstream_nodes.sql), [property](./macros/public/find_downstream_nodes.yml))](#find_downstream_models-sourcemacrospublicfind_downstream_nodessql-propertymacrospublicfind_downstream_nodesyml)
-  * [find_upstream_models ([source](./macros/public/find_upstream_nodes.sql), [property](./macros/public/find_upstream_nodes.yml))](#find_upstream_models-sourcemacrospublicfind_upstream_nodessql-propertymacrospublicfind_upstream_nodesyml)
+  * [find_unreferenced_sources](#find_unreferenced_sources)
+  * [find_downstream_models](#find_downstream_models)
+  * [find_upstream_models](#find_upstream_models)
 
 <!-- tocstop -->
 
@@ -25,9 +25,12 @@ We have verified that this package functions correctly with dbt Core version 1.5
 
 ## Macros
 
-### find_unreferenced_sources ([source](./macros/public/find_unreferenced_sources.sql), [property](./macros/public/find_unreferenced_sources.yml))
+### find_unreferenced_sources
 
 This macro returns a list of unreferenced sources.
+
+- [source](./macros/public/find_unreferenced_sources.sql)
+- [property](./macros/public/find_unreferenced_sources.yml)
 
 **Usage:**
 
@@ -35,9 +38,12 @@ This macro returns a list of unreferenced sources.
 dbt run-operation find_unreferenced_sources
 ```
 
-### find_downstream_models ([source](./macros/public/find_downstream_nodes.sql), [property](./macros/public/find_downstream_nodes.yml))
+### find_downstream_models
 
 This macro returns a list of downstream models.
+
+- [source](./macros/public/find_downstream_nodes.sql)
+- [property](./macros/public/find_downstream_nodes.yml)
 
 **Usage:**
 
@@ -49,9 +55,12 @@ dbt run-operation find_downstream_nodes --args '{"unique_id": "model.integration
   - 1.5: model.integration_tests.orders (model:view)
 ```
 
-### find_upstream_models ([source](./macros/public/find_upstream_nodes.sql), [property](./macros/public/find_upstream_nodes.yml))
+### find_upstream_models
 
 This macro returns a list of upstream models.
+
+- [source](./macros/public/find_upstream_nodes.sql)
+- [property](./macros/public/find_upstream_nodes.yml)
 
 **Usage:**
 
