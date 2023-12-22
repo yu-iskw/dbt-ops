@@ -14,19 +14,18 @@
   limitations under the License.
 #}
 
-{% macro test_macros() %}
-  {{- return(adapter.dispatch("test_macros", "integration_tests")()) -}}
-{% endmacro %}
+{% macro transpose_adjacency_list(adjacency_list) %}
+  {% set transposed_adjacency_list = {} %}
 
-{% macro default__test_macros() %}
-  {% do integration_tests.test_get_node_by_unique_id() %}
+  {% for source_unique_id, destination_unique_ids in adjacency_list.items() %}
+    {% for destination_unique_id in destination_unique_ids %}
+      {% if destination_unique_id not in transposed_adjacency_list %}
+        {% do transposed_adjacency_list.update({destination_unique_id: []}) %}
+      {% endif %}
 
+      {% do transposed_adjacency_list[destination_unique_id].append(source_unique_id) %}
+    {% endfor %}
+  {% endfor %}
 
-  {% do integration_tests.test_build_dependenncy_adjacency_list() %}
-
-  {% do integration_tests.test_transpose_adjacency_list() %}
-
-  {% do integration_tests.test_get_node_dependency_from_adjacency_list() %}
-
-  {% do integration_tests.test_find_unrendered_sources() %}
+  {{ return(transposed_adjacency_list) }}
 {% endmacro %}

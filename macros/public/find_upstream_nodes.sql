@@ -14,19 +14,15 @@
   limitations under the License.
 #}
 
-{% macro test_macros() %}
-  {{- return(adapter.dispatch("test_macros", "integration_tests")()) -}}
-{% endmacro %}
+{% macro find_upstream_nodes(
+    unique_id,
+    resource_types=['model', 'semantic_model', 'source', 'seed', 'snapshot', 'metric', 'test', 'exposure', 'analysis']) %}
+  {% if not unique_id %}
+    {{ exceptions.raise_compiler_error("unique_id is required.") }}
+  {% endif %}
 
-{% macro default__test_macros() %}
-  {% do integration_tests.test_get_node_by_unique_id() %}
+  {% set adjacency_list = dbt_ops.build_dependenncy_adjacency_list() %}
+  {% set dependency_node_info = dbt_ops.get_node_dependency_from_adjacency_list(adjacency_list, unique_id) %}
 
-
-  {% do integration_tests.test_build_dependenncy_adjacency_list() %}
-
-  {% do integration_tests.test_transpose_adjacency_list() %}
-
-  {% do integration_tests.test_get_node_dependency_from_adjacency_list() %}
-
-  {% do integration_tests.test_find_unrendered_sources() %}
+  {{ print_node_dependency(dependency_node_info, resource_types=resource_types) }}
 {% endmacro %}

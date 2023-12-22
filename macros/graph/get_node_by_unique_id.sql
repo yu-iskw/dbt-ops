@@ -14,19 +14,22 @@
   limitations under the License.
 #}
 
-{% macro test_macros() %}
-  {{- return(adapter.dispatch("test_macros", "integration_tests")()) -}}
-{% endmacro %}
+{% macro get_node_by_unique_id(unique_id) %}
+  {% if not unique_id %}
+    {{ exceptions.raise_compiler_error("unique_id is required.") }}
+  {% endif %}
 
-{% macro default__test_macros() %}
-  {% do integration_tests.test_get_node_by_unique_id() %}
+  {% for node in graph.nodes.values() %}
+    {% if node.unique_id == unique_id %}
+      {% do return(node) %}
+    {% endif %}
+  {% endfor %}
 
+  {% for node in graph.sources.values() %}
+    {% if node.unique_id == unique_id %}
+      {% do return(node) %}
+    {% endif %}
+  {% endfor %}
 
-  {% do integration_tests.test_build_dependenncy_adjacency_list() %}
-
-  {% do integration_tests.test_transpose_adjacency_list() %}
-
-  {% do integration_tests.test_get_node_dependency_from_adjacency_list() %}
-
-  {% do integration_tests.test_find_unrendered_sources() %}
+  {{ return(none) }}
 {% endmacro %}

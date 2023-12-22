@@ -15,16 +15,17 @@
 version: 2
 
 macros:
-  - name: find_unreferenced_sources
+  - name: find_downstream_nodes
     description: |-
-      This macro returns a list of sources that are not referenced by any models.
-      This is useful for identifying sources that are no longer needed.
+      This macro finds all downstream nodes of a given node specified by its unique_id.
+      It returns a list of nodes that are dependent on the given node, filtered by the specified resource types.
     arguments:
-      - name: format
+      - name: unique_id
         type: string
         description: |-
-          The format of the output. Valid values must be one of `text`, `json` and `yaml`. Defaults to `text`.
-      - name: reference_resource_types
+          The unique identifier of the node to find downstream nodes for.
+      - name: resource_types
         type: A list of string
         description: |-
-          A list of resource types to consider as references. Defaults to `["model", "snapshot", "exposure"]`.
+          A list of resource types to filter the downstream nodes.
+          Defaults to `["model", "semantic_model", "source", "seed", "snapshot", "metric", "test", "exposure", "analysis"]`.
