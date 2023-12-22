@@ -31,19 +31,3 @@
 
   {{ return(adjacency_list) }}
 {% endmacro %}
-
-{% macro transpose_adjacency_list(adjacency_list) %}
-  {% set transposed_adjacency_list = {} %}
-
-  {% for source_unique_id, destination_unique_ids in adjacency_list.items() %}
-    {% for destination_unique_id in destination_unique_ids %}
-      {% if destination_unique_id not in transposed_adjacency_list %}
-        {% do transposed_adjacency_list.update({destination_unique_id: []}) %}
-      {% endif %}
-
-      {% do transposed_adjacency_list[destination_unique_id].append(source_unique_id) %}
-    {% endfor %}
-  {% endfor %}
-
-  {{ return(transposed_adjacency_list) }}
-{% endmacro %}

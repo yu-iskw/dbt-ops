@@ -15,7 +15,7 @@
 #}
 
 {% macro get_node_dependency_from_adjacency_list(adjacency_list, unique_id) %}
-  {% set node_info = get_node_by_unique_id(unique_id) %}
+  {% set node_info = dbt_ops.get_node_by_unique_id(unique_id) %}
   {% set dependency_map = {unique_id: {"node": node_info, "depends_on": {}}} %}
 
   {% for dependent_unique_id in adjacency_list[unique_id] %}
