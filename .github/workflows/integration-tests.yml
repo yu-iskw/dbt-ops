@@ -55,8 +55,8 @@ jobs:
       - name: Install dependencies
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
-          pip install -r requirements-dev.txt
-          pip install -r "requirements/${{ matrix.pip-requirements }}"
+          pip install -U -r requirements-dev.txt
+          pip install -U -r "requirements/${{ matrix.pip-requirements }}"
       - name: Run integration tests
         id: "integration-tests"
         working-directory: "${{ github.workspace }}/integration_tests"
