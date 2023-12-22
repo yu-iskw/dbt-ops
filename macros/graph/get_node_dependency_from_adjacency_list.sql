@@ -14,12 +14,12 @@
   limitations under the License.
 #}
 
-{% macro get_upstream_nodes(adjacency_list, unique_id) %}
+{% macro get_node_dependency_from_adjacency_list(adjacency_list, unique_id) %}
   {% set node_info = get_node_by_unique_id(unique_id) %}
   {% set dependency_map = {unique_id: {"node": node_info, "depends_on": {}}} %}
 
   {% for dependent_unique_id in adjacency_list[unique_id] %}
-    {% set child_dependency_map = dbt_ops.get_upstream_nodes(adjacency_list, dependent_unique_id) %}
+    {% set child_dependency_map = dbt_ops.get_node_dependency_from_adjacency_list(adjacency_list, dependent_unique_id) %}
     {% do dependency_map[unique_id]["depends_on"].update(child_dependency_map) %}
   {% endfor %}
 

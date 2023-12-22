@@ -14,7 +14,12 @@
   limitations under the License.
 #}
 
-{% macro print_node_dependency(dependency_node_info, depth=0, parent_item=none, indent_spaces=2) %}
+{% macro print_node_dependency(
+    dependency_node_info,
+    depth=0,
+    parent_item=none,
+    indent_spaces=2,
+    resource_types=['model', 'semantic_model', 'source', 'seed', 'snapshot', 'metric', 'test', 'exposure', 'analysis']) %}
   {#
     print node dependency in the following format:
 
@@ -40,8 +45,18 @@
       {% set current_list_item = "%s"|format(loop.index) %}
     {% endif %}
 
-    {{ print("- %s: %s (%s)"|format(current_list_item, node.unique_id, node.resource_type)|indent(depth * indent_spaces, true) ) }}
+    {% if node.resource_type in resource_types %}
+      {% if node.config and node.config.materialized %}
+       {{ print("- %s: %s (%s:%s)"
+            | format( current_list_item, node.unique_id, node.resource_type, node.config.materialized)
+            | indent(depth * indent_spaces, true) ) }}
+      {% else %}
+       {{ print("- %s: %s (%s)"
+            | format( current_list_item, node.unique_id, node.resource_type)
+            | indent(depth * indent_spaces, true) ) }}
+      {% endif %}
+    {% endif %}
 
-    {{ dbt_ops.print_node_dependency(depends_on, depth + 1, current_list_item, indent_spaces) }}
+    {{ dbt_ops.print_node_dependency(depends_on, depth + 1, current_list_item, indent_spaces, resource_types=resource_types) }}
   {% endfor %}
 {% endmacro %}

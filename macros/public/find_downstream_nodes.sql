@@ -14,15 +14,21 @@
   limitations under the License.
 #}
 
-{% macro find_upstream_nodes(
+{% macro find_downstream_nodes(
     unique_id,
     resource_types=['model', 'semantic_model', 'source', 'seed', 'snapshot', 'metric', 'test', 'exposure', 'analysis']) %}
+  {#
+    This macro finds all downstream nodes of a given node specified by its unique_id.
+    It returns a list of nodes that are dependent on the given node, filtered by the specified resource types.
+  #}
+
   {% if not unique_id %}
     {{ exceptions.raise_compiler_error("unique_id is required.") }}
   {% endif %}
 
   {% set adjacency_list = dbt_ops.build_dependenncy_adjacency_list() %}
-  {% set dependency_node_info = dbt_ops.get_node_dependency_from_adjacency_list(adjacency_list, unique_id) %}
+  {% set transposed_adjacency_list = dbt_ops.transpose_adjacency_list(adjacency_list) %}
+  {% set dependency_node_info = dbt_ops.get_node_dependency_from_adjacency_list(transposed_adjacency_list, unique_id) %}
 
   {{ print_node_dependency(dependency_node_info, resource_types=resource_types) }}
 {% endmacro %}
