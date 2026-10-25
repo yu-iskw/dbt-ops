@@ -14,4 +14,6 @@
 dbt-duckdb>=1.7,<1.8
 dbt-core>=1.7,<1.8
 
+duckdb>=0.9,<1.0
+
 pytz>=2015.7
