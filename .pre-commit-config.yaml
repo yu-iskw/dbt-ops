@@ -44,6 +44,8 @@ repos:
     rev: 2.3.5
     hooks:
       - id: sqlfluff-fix
+        additional_dependencies:
+          - "click>=8.0,<8.2"
   # Execute `make generate-toc` before commit, but ignore if executing `pre-commit run --all-files`
   - repo: local
     hooks:
