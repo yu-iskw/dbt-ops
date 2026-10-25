@@ -11,13 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-pip==25.2
-
-dbt-duckdb>=1.7,<1.8
-dbt-core>=1.7,<1.8
+pip==25.0.1; python_version < "3.9"
+pip==25.2; python_version >= "3.9"
 
 loguru>=0.7,<1.0
-
-duckdb>=0.9,<1.0
 
 pre-commit-hooks>=3,<4
